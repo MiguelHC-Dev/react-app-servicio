@@ -19,23 +19,22 @@ import {
 } from "@heroicons/react/24/solid";
 import { useResizeDetector } from 'react-resize-detector';
 import { useAuth } from "../context/AuthContext"; // Importa el hook useAuth para acceder a la función de logout
+import { Link } from "react-router-dom";
 
 
 // Definición de items del menú de perfil
 const profileMenuItems = [
   {
-    label: "Mis Datos",// Texto del menú
-    icon: UserCircleIcon,// Ícono del menú
-    href: "/mis-datos",// Ruta del menú
-    key: "mis-datos",// Clave del menú
+    label: "Mis Datos",
+    icon: UserCircleIcon,
+    to: "/mis-datos", // Use the 'to' prop instead of 'href'
+    key: "mis-datos",
   },
-
   {
     label: "Cerrar Sesión",
     icon: PowerIcon,
-    href: "/login",
+    to: "/login", // Use the 'to' prop instead of 'href'
     key: "cerrar-sesion",
-
   },
 ];
 
@@ -44,11 +43,11 @@ const profileMenuItems = [
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { logout } = useAuth(); // Usa el hook useAuth para acceder a la función de logout
-  const handleMenuClick = (href) => {
-    if (href === "/login") {
+  const handleMenuClick = (to) => {
+    if (to === "/login") {
         logout(); // Cierra la sesión
-    } else if (href === "/mis-datos"){
-      window.location.href = href; // Redirige a la ruta del menú
+    } else if (to === "/mis-datos"){
+      window.location.href = to; // Redirige a la ruta del menú
     }
 };
 
@@ -78,21 +77,16 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon, href }, key) => {
+        {profileMenuItems.map(({ label, icon, to }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
-            
-              
-              
-              <button onClick={() => handleMenuClick(href)} key={key} className="block flex w-full text-black hover:bg-gray-200 rounded p-2 border-none">
+            <Link to={to} key={key} className="block flex w-full text-black hover:bg-gray-200 rounded p-2 border-none" onClick={closeMenu}>
               {React.createElement(icon, {
                 className: `h-4 w-4 mr-4 ${isLastItem ? "text-red-700" : ""}`,
                 strokeWidth: 2,
               })}
-                
-                {label}
-              </button>
-            
+              {label}
+            </Link>
           );
         })}
       </MenuList>
@@ -101,22 +95,17 @@ function ProfileMenu() {
 }
 
 
-
 // Definición de los items para el Dropdown del elemento Servicio Social
 const ServicioSocialMenuItems = [
   {
     title: "Formatos",
-    href: "/formatos",
+    to: "/formatos",
   },
   {
     title: "Carta Presentación",
-    href: "/carta-presentacion",
+    to: "/carta-presentacion",
   },
-
-
 ];
-
-
 
 
 
@@ -129,10 +118,10 @@ function ServicioSocialMenu() {
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen); // Función para alternar el estado del dropdown
 
-  const renderItems = ServicioSocialMenuItems.map(({ title, href }) => ( // Mapeo de los items del dropdown
-    <a href={href} key={title} className="block text-white lg:text-black lg:hover:bg-gray-200 rounded hover:bg-blue-800 p-2 border-none">
+  const renderItems = ServicioSocialMenuItems.map(({ title, to }) => ( // Mapeo de los items del dropdown
+    <Link to={to} key={title} className="block text-white lg:text-black lg:hover:bg-gray-200 rounded hover:bg-blue-800 p-2 border-none">
       {title}
-    </a>
+    </Link>
   ));
 
   return (
