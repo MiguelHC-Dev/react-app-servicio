@@ -45,11 +45,11 @@ function ProfileMenu() {
   const { logout } = useAuth(); // Usa el hook useAuth para acceder a la función de logout
   const handleMenuClick = (to) => {
     if (to === "/login") {
-        logout(); // Cierra la sesión
-    } else if (to === "/mis-datos"){
-      window.location.href = to; // Redirige a la ruta del menú
+      logout(); // Cierra la sesión
+    } else if (to === "/mis-datos") {
+      <Link to={to} onClick={closeMenu}></Link>
     }
-};
+  };
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -80,7 +80,7 @@ function ProfileMenu() {
         {profileMenuItems.map(({ label, icon, to }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
-            <Link to={to} key={key} className="block flex w-full text-black hover:bg-gray-200 rounded p-2 border-none" onClick={closeMenu}>
+            <Link to={to} key={key} className="block flex w-full text-black hover:bg-gray-200 rounded p-2 border-none" onClick={() => handleMenuClick(to)}>
               {React.createElement(icon, {
                 className: `h-4 w-4 mr-4 ${isLastItem ? "text-red-700" : ""}`,
                 strokeWidth: 2,
@@ -413,7 +413,7 @@ export default function NavbarComplex() {
     );
   }, []);
 
-  
+
   const irHome = () => {
 
     window.location.href = '/';
