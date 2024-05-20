@@ -19,7 +19,8 @@ function Login() {
 
 
     const irLoginPersonal = () => {
-        setVistaActual('Personal');
+        window.location.href = 'https://django-api-servicio.onrender.com/admin/login/?next=/admin/';
+
     };
 
     const irLoginEstudiantes = () => {
@@ -31,8 +32,10 @@ function Login() {
     }
 
     const irHomePersonal = () => {
-        window.location.href = '/homePersonal';
+        window.location.href = 'https://django-api-servicio.onrender.com/admin/login/?next=/admin/';
     }
+
+    
 
     const loginUser = async () => {
         try {
